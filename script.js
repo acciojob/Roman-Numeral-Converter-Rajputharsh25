@@ -1,4 +1,6 @@
 function convertToRoman(num) {
+  if (num <= 0) return "";
+
   const romanSymbols = [
     ['M', 1000],
     ['CM', 900],
@@ -15,21 +17,26 @@ function convertToRoman(num) {
     ['I', 1]
   ];
 
-  let result = '';
+  let result = "";
 
-  // Iterate through the symbols from largest to smallest
-  for (const [symbol, value] of romanSymbols) {
-    // While the current value fits into the remaining number
-    while (num >= value) {
-      result += symbol; // Add the symbol to our string
-      num -= value;     // Subtract the value from our total
+  for (let i = 0; i < romanSymbols.length; i++) {
+    while (num >= romanSymbols[i][1]) {
+      result += romanSymbols[i][0];
+      num -= romanSymbols[i][1];
     }
   }
 
   return result;
 }
 
-// Examples:
-console.log(convertToRoman(14));      // Output: XIV
-console.log(convertToRoman(798));     // Output: DCCXCVIII
-console.log(convertToRoman(3999));    // Output: MMMCMXCIX
+function convertNumber() {
+  const num = parseInt(document.getElementById("numberInput").value);
+  
+  if (isNaN(num) || num < 0 || num > 100000) {
+    document.getElementById("result").innerText = "Please enter a number between 0 and 100000";
+    return;
+  }
+
+  const roman = convertToRoman(num);
+  document.getElementById("result").innerText = "Roman Numeral: " + roman;
+}
